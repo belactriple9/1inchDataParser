@@ -157,20 +157,24 @@
 
                     }
                     else if (funcName === "swap" || funcName === "discountedSwap") {
-
+                        console.log(data);
                         let index = 10; // well always start at 10 since that's where the data we want begins
-
                         if (chain == "1") {
-                            caller = data.substring(index, index + 64); //probably don't need this
+                            console.log("This is ETH mainnet");
+                            caller = data.substring(index + 24, index + 64); //probably don't need this
                             //skip the next three sets of 64 chars
                             index += 192;
-                            sourceToken = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            sourceToken = "0x" + data.substring(index + 24, index + 64);
                             index += 64;
-                            destinationToken = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            destinationToken = "0x" + data.substring(index + 24, index + 64);
+
+                            console.log(sourceToken);
+                            console.log(destinationToken);
+
                             index += 64;
-                            sourceReciever = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            sourceReciever = "0x" + data.substring(index + 24, index + 64);
                             index += 64;
-                            destinationReciever = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            destinationReciever = "0x" + data.substring(index + 24, index + 64);
                             index += 64;
                             sourceAmount = ethers.BigNumber.from("0x" + data.substring(index, index + 64).replace(/^0+/, ''));
                             index += 64;
@@ -193,6 +197,7 @@
                                 slippage = (Math.round((minimumReturn / guaranteedAmount))).toFixed(2) + "%";
                             }
 
+
                             // 650, 714 will be 0000000000000000000000000000000000000000000000000000000000000100 not sure why
                             // 714, 778 will be 0000000000000000000000000000000000000000000000000000000000000000 without PERMIT and 00000000000000000000000000000000000000000000000000000000000000e0 with PERMIT I guess
 
@@ -210,16 +215,16 @@
                             source = ""; // maybe we can find this later
                         }
                         else if (chain == "56" || chain == "137") {
-
+                            console.log("This is either BSC or POLYGON")
                             caller = data.substring(index, index + 64); //probably don't need this
-                            index += 192;
-                            sourceToken = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            index += 191;
+                            sourceToken = "0x" + data.substring(index + 24, index + 64);
                             index += 64;
-                            destinationToken = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            destinationToken = "0x" + data.substring(index + 24, index + 64);
                             index += 64;
-                            let initialLiquidityPool = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            let initialLiquidityPool = "0x" + data.substring(index + 24, index + 64);
                             index += 64;
-                            client = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            client = "0x" + data.substring(index + 24, index + 64);
                             index += 64;
                             fromTokenAmount = ethers.BigNumber.from("0x" + data.substring(index, index + 64).replace(/^0+/, ''));
                             index += 64;
