@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.6/dist/web3.min.js" type="text/javascript"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script async>
+
+        localStorage.setItem("page", 1);
+
+        //hash: 0xfee7437c1970622c9dd146dee3d12f73a362a2ad4952f11878938359511223fc
+        //data: 0x7c02520000000000000000000000000027239549dd40e1d60f5b80b0c4196923745b1fd200000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000180000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000d2877702675e6ceb975b4a1dff9fb7baf4c91ea900000000000000000000000027239549dd40e1d60f5b80b0c4196923745b1fd2000000000000000000000000f014b1a93dffc2bcca0ba11afcc1a4c3932063b80000000000000000000000000000000000000000000000000000000437099c990000000000000000000000000000000000000000000000160a4a063e3dd5d6430000000000000000000000000000000000000000000000000000000000000005000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001720000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000062000000000000000000000000000000000000000000000000000000000000011600000000000000000000000000000000000000000000000000000000000001480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000004e4b3af37c000000000000000000000000000000000000000000000000000000000000000808000000000000000000000000000000000000000000000000000000000000024000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000000000050000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000003a45636885000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000001000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000d2877702675e6ceb975b4a1dff9fb7baf4c91ea9000000000000000000000000f014b1a93dffc2bcca0ba11afcc1a4c3932063b800000000000000000000000027239549dd40e1d60f5b80b0c4196923745b1fd200000000000000000000000000000000000000000000000b0c88fecd7b3d034c000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000140000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000044a9059cbb000000000000000000000000181655fee818e1e22c8aebb780c716e15b6f29aa000000000000000000000000000000000000000000000000000000021b84ce4c00000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000a4b757fed6000000000000000000000000181655fee818e1e22c8aebb780c716e15b6f29aa000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000d2877702675e6ceb975b4a1dff9fb7baf4c91ea90000000000000000002dc6c027239549dd40e1d60f5b80b0c4196923745b1fd2000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000a84b3af37c000000000000000000000000000000000000000000000000000000000000000808000000000000000000000000000000000000000000000000000000000000024000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb480000000000000000000000000000000500000000000000000000000000000005000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000009445636885000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000001000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000d2877702675e6ceb975b4a1dff9fb7baf4c91ea9000000000000000000000000f014b1a93dffc2bcca0ba11afcc1a4c3932063b800000000000000000000000027239549dd40e1d60f5b80b0c4196923745b1fd200000000000000000000000000000000000000000000000afdc10770c298d2f600000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000048000000000000000000000000000000000000000000000000000000000000006e08000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000036483f1291f00000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000300000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000000000fa000000000000000000000000000000fa00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000016080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000064eb5625d9000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb4800000000000000000000000040bbde0ec6f177c4a67360d0f0969cfc464b0bb400000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000080000000000000000000000040bbde0ec6f177c4a67360d0f0969cfc464b0bb400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000448999541a000000000000000000000000000000000000000000000000000000000000000100000000000000000000000027239549dd40e1d60f5b80b0c4196923745b1fd20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000000000000044800000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000001a4b3af37c000000000000000000000000000000000000000000000000000000000000000808000000000000000000000000000000000000000000000000000000000000044000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000000000320000000000000000000000000000003200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000064d1660f99000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec700000000000000000000000067b3825348521b94828127f1ee31da80ee67d28500000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000a4b757fed600000000000000000000000067b3825348521b94828127f1ee31da80ee67d285000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000d2877702675e6ceb975b4a1dff9fb7baf4c91ea90000000000000000002dc6c027239549dd40e1d60f5b80b0c4196923745b1fd20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000002647f8fe7a00000000000000000000000000000000000000000000000000000000000000080800000000000000000000000000000000000000000000000000000000000004400000000000000000000000027239549dd40e1d60f5b80b0c4196923745b1fd200000000000000000000000000000000000000000000000000000000000001e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000a405971224000000000000000000000000d2877702675e6ceb975b4a1dff9fb7baf4c91ea9000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004470bdb947000000000000000000000000d2877702675e6ceb975b4a1dff9fb7baf4c91ea900000000000000000000000000000000000000000000001643482fae0fea19130000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000001a4b3af37c000000000000000000000000000000000000000000000000000000000000000808000000000000000000000000000000000000000000000000000000000000044000000000000000000000000d2877702675e6ceb975b4a1dff9fb7baf4c91ea9000000000000000000000000000000010000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000064d1660f99000000000000000000000000d2877702675e6ceb975b4a1dff9fb7baf4c91ea9000000000000000000000000f014b1a93dffc2bcca0ba11afcc1a4c3932063b800000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e26b9977
+
+
+
+
+        let chainId = 1; //it's 1 by default
+        let tokenlist;
+        let provider;
+        let signer;
+        let tokenABI = [
+            // Read-Only Functions
+            "function balanceOf(address owner) view returns (uint256)",
+            "function decimals() view returns (uint8)",
+            "function symbol() view returns (string)"];
+
+        let poolABI = [{ "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "spender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "sender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount0", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "amount1", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "to", "type": "address" }], "name": "Burn", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "sender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount0", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "amount1", "type": "uint256" }], "name": "Mint", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "sender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount0In", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "amount1In", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "amount0Out", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "amount1Out", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "to", "type": "address" }], "name": "Swap", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "uint112", "name": "reserve0", "type": "uint112" }, { "indexed": false, "internalType": "uint112", "name": "reserve1", "type": "uint112" }], "name": "Sync", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "from", "type": "address" }, { "indexed": true, "internalType": "address", "name": "to", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "constant": true, "inputs": [], "name": "DOMAIN_SEPARATOR", "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "MINIMUM_LIQUIDITY", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "PERMIT_TYPEHASH", "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "internalType": "address", "name": "", "type": "address" }, { "internalType": "address", "name": "", "type": "address" }], "name": "allowance", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "approve", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "balanceOf", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "to", "type": "address" }], "name": "burn", "outputs": [{ "internalType": "uint256", "name": "amount0", "type": "uint256" }, { "internalType": "uint256", "name": "amount1", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "factory", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "getReserves", "outputs": [{ "internalType": "uint112", "name": "_reserve0", "type": "uint112" }, { "internalType": "uint112", "name": "_reserve1", "type": "uint112" }, { "internalType": "uint32", "name": "_blockTimestampLast", "type": "uint32" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "_token0", "type": "address" }, { "internalType": "address", "name": "_token1", "type": "address" }], "name": "initialize", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "kLast", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "to", "type": "address" }], "name": "mint", "outputs": [{ "internalType": "uint256", "name": "liquidity", "type": "uint256" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "name", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "nonces", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }, { "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" }, { "internalType": "uint256", "name": "deadline", "type": "uint256" }, { "internalType": "uint8", "name": "v", "type": "uint8" }, { "internalType": "bytes32", "name": "r", "type": "bytes32" }, { "internalType": "bytes32", "name": "s", "type": "bytes32" }], "name": "permit", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "price0CumulativeLast", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "price1CumulativeLast", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "to", "type": "address" }], "name": "skim", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "uint256", "name": "amount0Out", "type": "uint256" }, { "internalType": "uint256", "name": "amount1Out", "type": "uint256" }, { "internalType": "address", "name": "to", "type": "address" }, { "internalType": "bytes", "name": "data", "type": "bytes" }], "name": "swap", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [], "name": "sync", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "token0", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "token1", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "transfer", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "internalType": "address", "name": "from", "type": "address" }, { "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }]
+
+
+        let ethProvider = new ethers.providers.JsonRpcProvider("https://cloudflare-eth.com/")
+        let bscProvider = new ethers.providers.JsonRpcProvider("https://bsc-dataseed.binance.org/");
+        let polyProvider = new ethers.providers.JsonRpcProvider("https://rpc-mainnet.maticvigil.com/")
+        let ethplorerKey = "freekey";
+
+
+        $(() => {
+
+            $('#search-btn').on('click', (e) => {
+                e.preventDefault(); //*CRITICAL* : this "catches" the form submit event and stops it
+
+                async function driver() {
+                    let transaction = document.getElementById("transaction").value;
+                    let givenData = document.getElementById("data").value;
+                    //chainId = document.getElementById("drop-down").value;
+
+                    $('#results').text(""); //delete results
+                    let results;
+                    if (transaction != "")
+                        results = await getAndParseData(transaction);
+                    else if (givenData != "")
+                        results = await getAndParseData(givenData);
+
+                    $('#results').append(
+                        results
+                    );
+                }
+
+                async function getAndParseData(transaction) {
+
+                    let data = "";
+
+                    data = await ethProvider.getTransaction(transaction);
+                    if (data != null)
+                        return await parseData(data, "1")
+
+                    data = await bscProvider.getTransaction(transaction);
+                    if (data != null)
+                        return await parseData(data, "56")
+
+                    data = await polyProvider.getTransaction(transaction);
+                    if (data != null)
+                        return await parseData(data, "137")
+
+                }
+
+                async function parseData(transaction, chain) {
+                    let data = transaction.data;
+                    let client = transaction.from;
+                    let funcName = data.substring(0, 11) === "0x2e95b6c80" ? "unoswap" : data.substring(0, 11) === "0x7c0252000" ? "swap" : "discountedSwap"; //discountedSwap signature is 0x6c4a483e0
+                    //not all of these will be used since unoswap is simple and swap is complex
+                    let guaranteedAmount;
+                    let chainName = chain === "1" ? "Ethereum" : chain === "56" ? "Binance" : "Polygon";
+                    let caller;
+                    let sourceToken;
+                    let destinationToken;
+                    let sourceReciever;
+                    let destinationReciever;
+                    let sourceAmount;
+                    let minimumReturn;
+                    let slippage = "";
+                    let flags;
+                    let permit;
+                    let unknownData;
+                    let sourceTokenName;
+                    let destinationTokenName;
+                    let route;
+                    let tokensInRoute;
+                    let source;
+
+                    if (funcName === "unoswap") {
+                        guaranteedAmount = "No guaranteed Amount";
+                        caller = "" // technically 1inch contract that implements unoswap
+                        sourceToken = "0x" + data.substring(34, 74); // 11+24, 66
+                        //we have to figure out destination token by fetching data from the last pool
+
+                        sourceAmount = ethers.BigNumber.from("0x" + data.substring(74, 138).replace(/^0+/, ''));
+                        minimumReturn = ethers.BigNumber.from("0x" + data.substring(138, 202).replace(/^0+/, ''));
+                        //the flags happen in the data before the pool information, and they're in each pool
+                        flags = ""; // maybe not used
+                        permit = ""; //not used
+                        //this is if unoswap uses 1 pool
+                        if (data.length == 394) {
+                            route = ["0x" + data.substring(354, 394)] //330 + 24, 330 + 64
+                            //the flags are the series of 24 bytes leading the pool addresses
+                            destinationToken = await fetchDestinationToken(route, sourceToken, chain); //provide the route addresses and source token
+                        }
+                        else if (data.length == 402) {
+                            route = ["0x" + data.substring(354, 394)]; //330 + 24, 330 + 64
+                            //the flags are the series of 24 bytes leading the pool addresses
+                            source = data.substring(data.length - 8); //this identifies if the transaction originated from outside app.1inch.io
+                            destinationToken = await fetchDestinationToken(route, sourceToken, chain); //provide the route addresses and source token
+                        }
+                        //This is if unoswap uses 2 pools
+                        else if (data.length == 458) {
+                            route = ["0x" + data.substring(354, 394), "0x" + data.substring(418, 458)];
+                            //the flags are the series of 24 bytes leading the pool addresses
+                            destinationToken = await fetchDestinationToken(route, sourceToken, chain); //provide the route addresses and source token
+                        }
+                        else if (data.length == 466) {
+                            route = ["0x" + data.substring(354, 394), "0x" + data.substring(418, 458)];
+                            //the flags are the series of 24 bytes leading the pool addresses
+                            source = data.substring(data.length - 8); //this identifies if the transaction originated from outside app.1inch.io
+                            destinationToken = await fetchDestinationToken(route, sourceToken, chain); //provide the route addresses and source token
+                        }
+                        //This is if unoswap uses 3 pools
+                        else if (data.length == 530) {
+                            route = ["0x" + data.substring(354, 394), "0x" + data.substring(418, 458), "0x" + data.substring(482, 492)];
+                            //the flags are the series of 24 bytes leading the pool addresses
+                            destinationToken = await fetchDestinationToken(route, sourceToken, chain); //provide the route addresses and source token
+                        }
+                        else if (data.length == 538) {
+                            route = ["0x" + data.substring(354, 394), "0x" + data.substring(418, 458), "0x" + data.substring(482, 492)];
+                            //the flags are the series of 24 bytes leading the pool addresses
+                            source = data.substring(data.length - 8); //this identifies if the transaction originated from outside app.1inch.io
+                            destinationToken = await fetchDestinationToken(route, sourceToken, chain); //provide the route addresses and source token
+                        }
+                        console.log(sourceToken);
+                        tokensInRoute = await fetchTokenNames(route, sourceToken, chain);
+                        tokensInRoute = tokensInRoute.join(" -> ");
+                        sourceTokenName = await getTokenData(sourceToken, chain);
+                        destinationTokenName = await getTokenData(destinationToken, chain);
+
+
+
+
+                    }
+                    else if (funcName === "swap" || funcName === "discountedSwap") {
+
+                        let index = 10; // well always start at 10 since that's where the data we want begins
+
+                        if (chain == "1") {
+                            caller = data.substring(index, index + 64); //probably don't need this
+                            //skip the next three sets of 64 chars
+                            index += 192;
+                            sourceToken = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            index += 64;
+                            destinationToken = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            index += 64;
+                            sourceReciever = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            index += 64;
+                            destinationReciever = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            index += 64;
+                            sourceAmount = ethers.BigNumber.from("0x" + data.substring(index, index + 64).replace(/^0+/, ''));
+                            index += 64;
+                            minimumReturn = ethers.BigNumber.from("0x" + data.substring(index, index + 64).replace(/^0+/, ''));
+                            index += 64;
+                            flags = data.substring(index, index + 64).replace(/^0+/, '');
+                            permit = {
+                                "owner": "",
+                                "spender": "",
+                                "value": "",
+                                "deadline": "",
+                                "v": "",
+                                "r": "",
+                                "s": ""
+                            }
+
+                            data.indexOf("4470bdb947") != -1 ? guaranteedAmount = (data.substring(data.indexOf("4470bdb947") + 74, data.indexOf("4470bdb947") + 138)).replace(/^0+/, '') : guaranteedAmount = "Guaraneed Amount is Unknown";
+                            if (guaranteedAmount != "Guaraneed Amount is Unknown") {
+                                guaranteedAmount = ethers.BigNumber.from("0x" + guaranteedAmount);
+                                slippage = (Math.round((minimumReturn / guaranteedAmount))).toFixed(2) + "%";
+                            }
+
+                            // 650, 714 will be 0000000000000000000000000000000000000000000000000000000000000100 not sure why
+                            // 714, 778 will be 0000000000000000000000000000000000000000000000000000000000000000 without PERMIT and 00000000000000000000000000000000000000000000000000000000000000e0 with PERMIT I guess
+
+                            if (data.substring(714, 778) === "00000000000000000000000000000000000000000000000000000000000000e0") {
+                                permit[owner] = data.substring(778, 842);
+                                permit[spender] = data.substring(842, 906);
+                                permit[value] = data.substring(906, 970);
+                                permit[deadline] = data.substring(970, 1034);
+                                permit[v] = data.substring(1034, 1098);
+                                permit[r] = data.substring(1098, 1162);
+                                permit[s] = data.substring(1162, 1226);
+
+                                unknownData = data.substring(1226, data.length);
+                            }
+                            source = ""; // maybe we can find this later
+                        }
+                        else if (chain == "56" || chain == "137") {
+
+                            caller = data.substring(index, index + 64); //probably don't need this
+                            index += 192;
+                            sourceToken = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            index += 64;
+                            destinationToken = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            index += 64;
+                            let initialLiquidityPool = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            index += 64;
+                            client = "0x" + data.substring(index, index + 64).replace(/^0+/, '');
+                            index += 64;
+                            fromTokenAmount = ethers.BigNumber.from("0x" + data.substring(index, index + 64).replace(/^0+/, ''));
+                            index += 64;
+                            minimumReturn = ethers.BigNumber.from("0x" + data.substring(index, index + 64).replace(/^0+/, ''));
+                            index += 64;
+                            flags = data.substring(index, index + 64).replace(/^0+/, '');
+                            index += 64;
+                            unknownData = data.substring(index, data.length);
+                            data.indexOf("4470bdb947") === -1 ? (guaranteedAmount = "Guaranteed Amount is Unknown") : (guaranteedAmount = (data.substring(data.indexOf("4470bdb947") + 74, data.indexOf("4470bdb947") + 138)).replace(/^0+/, ''));
+                            source = "" // maybe we can find this later?
+                            if (guaranteedAmount != "Guaraneed Amount is Unknown") {
+                                guaranteedAmount = ethers.BigNumber.from("0x" + guaranteedAmount);
+                                slippage = (Math.round((minimumReturn / guaranteedAmount))).toFixed(2) + "%";
+                            }
+                        }
+                        //convert guaranteedAmount in hex to an integer and make it a BigNumber
+
+                        //let tokenAddress = "0x" + data.substring(data.indexOf("4470bdb947") + 34, data.indexOf("4470bdb947") + 74) //this is the destination token
+                        route = "unknown for swap" //solveRoute(unknownData, chain);
+                        tokensInRoute = "unknown for swap" //fetchTokenNames(route, chain);
+
+                        //now lets get the name of the tokens
+                        sourceTokenName = await getTokenData(sourceToken, chain);
+                        destinationTokenName = await getTokenData(destinationToken, chain);
+
+                    }
+                    else {
+                        client = "Error: Was this not from 1inch?"
+                    }
+
+
+                    let res = '<table>';
+                    let explorer = getChainExplorer(chain) + "token/";
+
+                    client != "" ? res += '<tr><td>Client:</td><td>' + client + '</td></tr>' : null;
+                    chainName != "" ? res += '<tr><td>Chain:</td><td>' + chainName + '</td></tr>' : null;
+                    funcName != "" ? res += '<tr><td>Function:</td><td>' + funcName + '</td></tr>' : null;
+                    //sourceToken != "" ? res += '<tr><td>Source Token:</td><td>' + sourceToken + '</td></tr>' : null;
+                    minimumReturn != "" ? res += '<tr><td>Minimum Return:</td><td>' + minimumReturn + '</td></tr>' : null;
+                    guaranteedAmount != "" ? res += '<tr><td>Guaranteed Amount:</td><td>' + guaranteedAmount + '</td></tr>' : null;
+                    slippage != "" ? res += '<tr><td>Slippage:</td><td>' + slippage + '</td></tr>' : null;
+                    flags != "" ? res += '<tr><td>Flags:</td><td>' + flags + '</td></tr>' : null;
+                    sourceTokenName != "" ? res += '<tr><td>Source Token Name:</td><td><a href="' + explorer + sourceToken + '">' + sourceTokenName + '</td></tr>' : null;
+                    destinationTokenName != "" ? res += '<tr><td>Destination Token Name:</td><td><a href="' + explorer + destinationToken + '">' + destinationTokenName + '</td></tr>' : null;
+                    tokensInRoute != "" ? res += '<tr><td>Tokens in Route:</td><td>' + tokensInRoute + '</td></tr>' : null;
+                    source != "" ? res += '<tr><td>Source:</td><td>' + source + '</td></tr>' : null;
+                    res += '</table>';
+                    return res;
+
+
+
+                }
+
+                //function fetch destination token will return the destination token address given an array of pools and a source token address
+                async function fetchDestinationToken(route, sourceToken, chain) {
+                    let destinationToken;
+                    let pool;
+                    let poolData;
+                    for (let i = 0; i < route.length; i++) {
+                        pool = route[i];
+                        poolData = await getPoolData(pool, chain);
+                        if (await poolData.token0 === sourceToken) {
+                            sourceToken = await poolData.token1;
+                        } else if (await poolData.token1 === sourceToken) {
+                            sourceToken = await poolData.token0;
+                        }
+                    }
+                    return await poolData.token0 === sourceToken ? await poolData.token1 : await poolData.token0;
+                }
+
+                //function to get the names of the tokens in the route
+                async function fetchTokenNames(route, sourceToken, chain) {
+                    let tokenNames = [];
+                    let pool;
+                    let poolData;
+                    console.log(sourceToken);
+                    if (sourceToken === "0x0000000000000000000000000000000000000000" || sourceToken === "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
+                        sourceToken = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" //this is wETH 
+                        tokenNames.push("ETH");
+                    }
+                    //console.log("Gonna find the route now");
+                    for (let i = 0; i < route.length; i++) {
+                        pool = route[i];
+                        poolData = await getPoolData(pool, chain);
+
+                        let token0 = await getTokenData(poolData.token0, chain);
+                        let token1 = await getTokenData(poolData.token1, chain);
+                        // console.log("token0 " + token0 + " :: " + "token1 " + token1);
+                        // console.log("poolData.token0 " + poolData.token0 + " :: " + "poolData.token1 " + poolData.token1);
+                        if ((await poolData.token0).toLowerCase() == sourceToken.toLowerCase()) {
+                            //console.log(sourceToken + " is token0");
+                            tokenNames.push(token0);
+                            sourceToken = await poolData.token1;
+                        }
+                        else if ((await poolData.token1).toLowerCase() === sourceToken.toLowerCase()) {
+                            //console.log(sourceToken + " is token1");
+                            tokenNames.push(token1);
+                            sourceToken = await poolData.token0;
+                        }
+                        //console.log("sourceToken " + sourceToken);
+                    }
+                    //console.log(sourceToken + " finishing getting the last token");
+                    tokenNames.push(await getTokenData(sourceToken, chain)); //fill in the last token
+                    //console.log(tokenNames);
+
+                    return tokenNames;
+                }
+
+                //this function will get a tokens data given a token address and chain
+                async function getTokenData(tokenAddress, chain) {
+
+                    if (tokenAddress === "0x0000000000000000000000000000000000000000" || tokenAddress === "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
+                        return "ETH";
+                    }
+                    if (chain == 1) {
+                        return (await new ethers.Contract(tokenAddress, tokenABI, ethProvider)).symbol();
+                    } else if (chain == 56) {
+                        return (await new ethers.Contract(tokenAddress, tokenABI, bscProvider)).symbol();
+                    } else if (chain == 137) {
+                        return (await new ethers.Contract(tokenAddress, tokenABI, polyProvider)).symbol();
+                    }
+                }
+
+                //function get pool data will return the pool data given a pool address using ethers and the chain
+                async function getPoolData(poolContract, chain) {
+
+                    if (chain == 1) {
+                        let pool = new ethers.Contract(poolContract, poolABI, ethProvider);
+                        let poolData =
+                        {
+                            token0: await pool.token0(),
+                            token1: await pool.token1(),
+                        }
+                        return poolData;
+                    }
+                    if (chain == 56) {
+                        let pool = new ethers.Contract(poolContract, poolABI, bscProvider);
+                        let poolData =
+                        {
+                            token0: await pool.token0(),
+                            token1: await pool.token1(),
+                        }
+                        return poolData;
+                    }
+                    if (chain == 137) {
+                        let pool = new ethers.Contract(poolContract, poolABI, polyProvider);
+                        let poolData =
+                        {
+                            token0: await pool.token0(),
+                            token1: await pool.token1(),
+                        }
+                        return poolData;
+                    }
+                }
+
+                //solve route will try to break down the unknown data from swap and return the route
+                //route will be a simple array with the pool addresses
+                /** todo */
+                async function solveRoute(unknownData, chain) {
+                    //we can try to find the signature from https://www.4byte.directory but it's unlikely to contain the signature
+                    let route = [];
+
+
+                    return route;
+                }
+
+                //get the chain explorer url for the given chain
+                function getChainExplorer(chain) {
+                    if (chain == 1) {
+                        return "https://etherscan.io/";
+                    } else if (chain == 56) {
+                        return "https://bscscan.com/";
+                    } else if (chain == 137) {
+                        return "https://polygonscan.com/";
+                    }
+                }
+
+                //always have to do this at the end of the driver
+
+
+                driver();
+
+            });
+        });
+    </script>
+
+
+
+</head>
+
+<body>
+
+    <h1>1inch transaction data decoder</h1>
+
+    <pre>
+----------------------------------------------------------- 
+
+1) Input a transaction hash
+2) Press search button
+3) A partial decode will be displayed
+
+----------------------------------------------------------- 
+</pre>
+
+    <!-- <text>First, select a chain</text>
+
+    <form>
+        <select id="drop-down">
+            <option value="1">1 ETH</option>
+            <option value="56">56 BSC</option>
+            <option value="137">137 MATIC</option>
+        </select>
+    </form> 
+    <br>
+
+    <text>Then</text>
+
+    <br><br>-->
+
+    <form style="height:30px">
+        <text>Enter a hash </text>
+        <input type="text" id="transaction" style="width:250px;"></input>
+    </form>
+    <br>
+    <h3>Or</h3>
+    <br>
+    <form style="height:30px">
+        <text>Enter the data </text>
+        <input type="text" id="data" style="width:250px;"></input>
+    </form>
+    <br>
+    <form>
+        <button id="search-btn" style="height:30px">Search</button>
+    </form>
+
+
+    <br>
+
+
+
+    <h4>Results</h4>
+    <p id="results" style="white-space: pre-line; display: block;">
+
+    </p>
+
+</body>
+
+
+
+<style>
+    table {
+        min-width: 300px;
+        width: 300px;
+        border-width: 1px;
+        border-color: black;
+    }
+
+    td {
+        min-width: 150px;
+        border: 1px solid gray;
+        width: 150px;
+    }
+</style>
+
+</html>
