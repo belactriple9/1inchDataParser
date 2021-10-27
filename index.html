@@ -237,7 +237,7 @@
                             source = "" // maybe we can find this later?
                             if (guaranteedAmount != "Guaraneed Amount is Unknown") {
                                 guaranteedAmount = ethers.BigNumber.from("0x" + guaranteedAmount);
-                                slippage = (Math.round((minimumReturn / guaranteedAmount))).toFixed(2) + "%";
+                                slippage = (100 - (Math.round((minimumReturn / guaranteedAmount) * 100))) + "%";
                             }
                         }
                         //convert guaranteedAmount in hex to an integer and make it a BigNumber
