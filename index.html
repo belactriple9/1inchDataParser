@@ -63,15 +63,26 @@
 
                     data = await ethProvider.getTransaction(transaction);
                     if (data != null)
-                        return await parseData(data, "1")
-
+                        try {
+                            return await parseData(data, "1")
+                        } catch (e) {
+                            $("#results").append("<p>An error occured</p><p>Transaction Failed To Parse</p>");
+                        }
                     data = await bscProvider.getTransaction(transaction);
                     if (data != null)
-                        return await parseData(data, "56")
+                        try {
+                            return await parseData(data, "56")
+                        } catch (e) {
+                            $("#results").append("<p>An error occured</p><p>Transaction Failed To Parse</p>");
+                        }
 
                     data = await polyProvider.getTransaction(transaction);
                     if (data != null)
-                        return await parseData(data, "137")
+                        try {
+                            return await parseData(data, "137")
+                        } catch (e) {
+                            $("#results").append("<p>An error occured</p><p>Transaction Failed To Parse</p>");
+                        }
 
                 }
 
@@ -403,8 +414,6 @@
                 }
 
                 //always have to do this at the end of the driver
-
-
                 driver();
 
             });
